@@ -1,0 +1,38 @@
+name: Workflow Time Report
+author: MichinaoShimizu
+description: Create a report on `Billable Time` in new ISSUE.
+outputs:
+  markdown:
+    description: Markdown Report
+    value: ${{ steps.markdown.outputs.stdout }}
+
+runs:
+  using: composite
+  steps:
+    - name: Generate markdown text
+      id: markdown
+      shell: bash
+      run: |
+        data=$(bash $GITHUB_ACTION_PATH/report.sh)
+        data="${data//$'\n'/\\n}"
+        echo "::set-output name=stdout::$data"
+      env:
+        GH_TOKEN: ${{ github.token }}
+        TARGET_REPOSITORY: ${{ github.repository }}
+
+    - name: Write job summary
+      shell: bash
+      run: echo -e "${{ steps.markdown.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
+
+    - name: Create issue and label
+      shell: bash
+      run: |
+        gh label create "workflow-time-report" -R ${{ github.repository }} --color 000000 -f
+        gh issue create -R ${{ github.repository }} --label "${{ env.LABEL }}" --body "$(echo -e "${{ steps.markdown.outputs.stdout }}")" --title "Workflow Time Report"
+      env:
+        GH_TOKEN: ${{ github.token }}
+        LABEL: workflow-time-report
+
+branding:
+  icon: "sun"
+  color: "orange"

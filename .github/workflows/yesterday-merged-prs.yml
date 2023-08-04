@@ -1,0 +1,12 @@
+name: Yesterday Merged PRs
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v3
+      - uses: MichinaoShimizu/yesterday-merged-prs@v2

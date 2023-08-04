@@ -1,0 +1,22 @@
+name: Shellcheck
+
+on:
+  pull_request:
+    paths:
+      - "**.sh"
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-shfmt@v1
+        with:
+          level: "warning"
+          fail_on_error: "true"
+
+      - uses: reviewdog/action-shellcheck@v1
+        with:
+          reporter: "github-pr-review"
+          level: "warning"
+          fail_on_error: "true"
