@@ -25,6 +25,7 @@ runs:
       run: echo -e "${{ steps.markdown.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
 
     - name: Set current date as env variable
+      shell: bash
       if: always()
       run: echo "NOW=$(date +'%Y-%m')" >> $GITHUB_ENV
 
