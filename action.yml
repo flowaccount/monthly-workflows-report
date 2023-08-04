@@ -24,11 +24,15 @@ runs:
       shell: bash
       run: echo -e "${{ steps.markdown.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
 
+    - name: Set current date as env variable
+      if: always()
+      run: echo "NOW=$(date +'%Y-%m')" >> $GITHUB_ENV
+
     - name: Create issue and label
       shell: bash
       run: |
         gh label create "workflow-time-report" -R ${{ github.repository }} --color 000000 -f
-        gh issue create -R ${{ github.repository }} --label "${{ env.LABEL }}" --body "$(echo -e "${{ steps.markdown.outputs.stdout }}")" --title "Workflow Time Report"
+        gh issue create -R ${{ github.repository }} --label "${{ env.LABEL }}" --body "$(echo -e "${{ steps.markdown.outputs.stdout }}")" --title "Workflow Time Report ${{ env.NOW }}"
       env:
         GH_TOKEN: ${{ github.token }}
         LABEL: workflow-time-report
