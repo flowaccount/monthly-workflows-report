@@ -9,7 +9,7 @@ Github Actions that outputs the aggregated results related to Billable Time of a
 ## Usage
 
 ```yaml
-uses: MichinaoShimizu/workflow-time-report@v7.1.0
+uses: flowaccount/monthly-workflows-report@v1.2
 ```
 
 ## Example
@@ -29,5 +29,5 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
-      - uses: MichinaoShimizu/workflow-time-report@v7.1.0
+      - uses: flowaccount/monthly-workflows-report@v1.2
 ```
