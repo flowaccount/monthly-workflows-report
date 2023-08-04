@@ -15,11 +15,11 @@ uses: flowaccount/monthly-workflows-report@v1.2
 ## Example
 
 ```yaml
-name: Weekly Report Tasks
+name: Monthly Report Tasks
 
 on:
   schedule:
-    - cron: '0 1 * * 1'
+    - cron: '0 0 1 * *'
 
   workflow_dispatch: 
 
